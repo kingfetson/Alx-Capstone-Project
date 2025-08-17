@@ -1,8 +1,6 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
-const RecipesPage = () => {
+const RecipePage = () => {
   return (
     <div className="bg-orange-50 min-h-screen">
       <Navbar />
@@ -16,4 +14,4 @@ const RecipesPage = () => {
   );
 };
 
-export default RecipesPage;
+export default RecipePage;
