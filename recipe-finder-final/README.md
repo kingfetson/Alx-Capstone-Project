@@ -89,7 +89,7 @@ App will run at  `http://localhost:3000`
 
 ### Home Page
 
-![Home Page](https://via.placeholder.com/800x400?text=Home+Page+Screenshot)
+![Home Page](../LandingPage.png)
 
 ### Add Recipe
 
