@@ -27,15 +27,34 @@ The app allows users to browse, search, and add their own recipes.
 
 recipe-finder/
 │── src/
+|   ├──assets/
+|          ├──
 │   ├── components/
-│   │   ├── HomePage.jsx        # Displays recipe list
-│   │   ├── AddRecipeForm.jsx   # Form to add new recipes
-│   │   ├── RecipeDetail.jsx    # Recipe detail view
+         ├──ui/
+            ├──button.tsx
+            ├──card.tsx
+            ├──input.tsx
+         ├── Footer.jsx
+         ├──Header.jsx
+         ├──Navbar.jsx
+         ├──SearchBar.jsx
+         ├──lib/
+              ├──utils.ts
+|   |    ├──pages/
+             ├── HomePage.jsx        # Displays recipe list
+│   │        ├── AboutPage.jsx       
+│   │        ├── CategoriesPage.jsx
+             ├── NetFound.jsx
+             ├──RecipePage.jsx
+         ├──services
+              ├──api.js
 │   ├── data.json               # Sample recipe data
-│   ├── App.jsx                 # Main app component
-│   ├── index.js                # React entry point
+│   ├── App.jsx                 # Main app components center
+│   ├── global.js                # styles
+    ├──main.jsx                  #main app
 │── public/
 │── package.json
+├──components.json
 │── README.md
 
 ````
