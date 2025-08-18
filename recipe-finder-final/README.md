@@ -89,11 +89,11 @@ App will run at  `http://localhost:3000`
 
 ### Home Page
 
-![Home Page](../LandingPage.png)
+![Home Page](./public/LandingPage.png)
 
 ### Add Recipe
 
-![Add Recipe](https://via.placeholder.com/800x400?text=Add+Recipe+Screenshot)
+![RecipeDasBoard](./public/RecipeDashboard.png)
 
 ---
 
