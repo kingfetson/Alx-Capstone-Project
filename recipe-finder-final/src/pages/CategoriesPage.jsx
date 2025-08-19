@@ -1,82 +1,142 @@
 import React from "react";
 import Footer from "../components/Footer";
 
+import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
+import { CategoryCard } from "@/components/category-card"
 
 const categories = [
-  { name: "Italian", image: "https://via.placeholder.com/200" },
-  { name: "Mexican", image: "https://via.placeholder.com/200" },
-  { name: "Asian", image: "https://via.placeholder.com/200" },
-  { name: "Indian", image: "https://via.placeholder.com/200" },
-  { name: "Mediterranean", image: "https://via.placeholder.com/200" },
-  { name: "Desserts", image: "https://via.placeholder.com/200" },
-  { name: "Breakfast", image: "https://via.placeholder.com/200" },
-  { name: "Soups", image: "https://via.placeholder.com/200" },
-];
+  {
+    id: 1,
+    name: "Italian",
+    image: "/italian-pasta-fork.png",
+  },
+  {
+    id: 2,
+    name: "Mexican",
+    image: "/placeholder-b0ayo.png",
+  },
+  {
+    id: 3,
+    name: "Asian",
+    image: "/asian-stir-fry-wok.png",
+  },
+  {
+    id: 4,
+    name: "Indian",
+    image: "/indian-curry-clay-pot.png",
+  },
+  {
+    id: 5,
+    name: "Mediterranean",
+    image: "/mediterranean-grilled-fish.png",
+  },
+  {
+    id: 6,
+    name: "Desserts",
+    image: "/colorful-desserts-pastries.png",
+  },
+  {
+    id: 7,
+    name: "Breakfast",
+    image: "/breakfast-pancakes-berries.png",
+  },
+  {
+    id: 8,
+    name: "Soups",
+    image: "/placeholder.svg?height=120&width=120",
+  },
+]
 
-const Categories = () => {
+export default function CategoriesPage() {
   return (
-    <div className="min-h-screen bg-orange-50 py-12 px-6 flex">
-      {/* Sidebar Filters */}
-      <div className="w-1/4 bg-orange-100 rounded-2xl p-6 mr-6">
-        <h2 className="text-lg font-bold text-gray-800 mb-4">Cuisine</h2>
-        {["Italian", "Mexican", "Asian", "Indian", "Mediterranean"].map((cuisine) => (
-          <label key={cuisine} className="block text-gray-700">
-            <input type="checkbox" className="mr-2" /> {cuisine}
-          </label>
-        ))}
-
-        <h2 className="text-lg font-bold text-gray-800 mt-6 mb-2">Dietary Preferences</h2>
-        {["Vegetarian", "Vegan", "Gluten-Free", "Dairy-Free"].map((diet) => (
-          <label key={diet} className="block text-gray-700">
-            <input type="checkbox" className="mr-2" /> {diet}
-          </label>
-        ))}
-
-        <h2 className="text-lg font-bold text-gray-800 mt-6 mb-2">Difficulty</h2>
-        {["Easy", "Medium", "Hard"].map((level) => (
-          <label key={level} className="block text-gray-700">
-            <input type="checkbox" className="mr-2" /> {level}
-          </label>
-        ))}
-      </div>
-
-      {/* Categories List */}
-      <div className="flex-1">
-        <div className="flex items-center mb-6">
-          <input
-            type="text"
-            placeholder="Search categories..."
-            className="flex-1 rounded-full border px-4 py-2 mr-4"
-          />
-          <select className="rounded-full border px-4 py-2">
-            <option>Sort by: Alphabetical</option>
-            <option>Sort by: Popularity</option>
-          </select>
+    <div className="min-h-screen bg-orange-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Search and Sort */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="flex-1 flex gap-2">
+            <Input
+              placeholder="Search categories..."
+              className="flex-1 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+            />
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+              <Search className="h-4 w-4" />
+            </Button>
+          </div>
+          <Select defaultValue="alphabetical">
+            <SelectTrigger className="w-full md:w-48 border-gray-300">
+              <SelectValue placeholder="Sort by: Alphabetical" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="alphabetical">Sort by: Alphabetical</SelectItem>
+              <SelectItem value="popular">Sort by: Popular</SelectItem>
+              <SelectItem value="newest">Sort by: Newest</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-3 gap-6">
-          {categories.map((category) => (
-            <div
-              key={category.name}
-              className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-lg transition"
-            >
-              <div className="relative w-24 h-24 mb-4">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-24 h-24 object-cover rounded-full"
-                />
-                {/* Orange overlay */}
-                <div className="absolute inset-0 bg-orange-500/30 rounded-full"></div>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar Filters */}
+          <aside className="lg:w-64 space-y-6">
+            <div>
+              <h3 className="font-semibold text-orange-500 mb-4 text-lg">Cuisine</h3>
+              <div className="space-y-3">
+                {["Italian", "Mexican", "Asian", "Indian", "Mediterranean"].map((cuisine) => (
+                  <div key={cuisine} className="flex items-center space-x-2">
+                    <Checkbox id={cuisine.toLowerCase()} />
+                    <label htmlFor={cuisine.toLowerCase()} className="text-sm text-gray-600 cursor-pointer">
+                      {cuisine}
+                    </label>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">{category.name}</h3>
             </div>
-          ))}
+
+            <div>
+              <h3 className="font-semibold text-orange-500 mb-4 text-lg">Dietary Preferences</h3>
+              <div className="space-y-3">
+                {["Vegetarian", "Vegan", "Gluten-Free", "Dairy-Free"].map((diet) => (
+                  <div key={diet} className="flex items-center space-x-2">
+                    <Checkbox id={diet.toLowerCase().replace("-", "")} />
+                    <label
+                      htmlFor={diet.toLowerCase().replace("-", "")}
+                      className="text-sm text-gray-600 cursor-pointer"
+                    >
+                      {diet}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-orange-500 mb-4 text-lg">Difficulty</h3>
+              <div className="space-y-3">
+                {["Easy", "Medium", "Hard"].map((difficulty) => (
+                  <div key={difficulty} className="flex items-center space-x-2">
+                    <Checkbox id={difficulty.toLowerCase()} />
+                    <label htmlFor={difficulty.toLowerCase()} className="text-sm text-gray-600 cursor-pointer">
+                      {difficulty}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+
+          {/* Categories Grid */}
+          <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {categories.map((category) => (
+                <CategoryCard key={category.id} category={category} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  );
-};
-
-export default Categories;
+  )
+}
