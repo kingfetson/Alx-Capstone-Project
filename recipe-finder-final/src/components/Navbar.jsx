@@ -5,8 +5,8 @@ import { FiSearch } from "react-icons/fi";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center px-8 py-4 bg-orange-100 shadow-sm">
-      <Link to="/" className="text-orange-600 font-bold text-xl">
+    <nav className="flex justify-between items-center px-8 py-4 bg-orange-200 shadow-sm">
+      <Link to="/" className="text-orange-700 font-bold text-xl">
         RecipeFinder
       </Link>
       <ul className="flex gap-6 text-gray-700 font-medium">

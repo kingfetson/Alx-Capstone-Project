@@ -1,6 +1,5 @@
 import { Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import Image from "next/image"
 
 interface Recipe {
   id: number
@@ -18,7 +17,11 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-gray-200">
       <div className="aspect-[4/3] relative">
-        <Image src={recipe.image || "/placeholder.svg"} alt={recipe.title} fill className="object-cover" />
+        <img
+          src={recipe.image || "/placeholder.svg"}
+          alt={recipe.title}
+          className="object-cover w-full h-full"
+        />
       </div>
       <CardContent className="p-4">
         <h3 className="font-semibold text-lg text-gray-800 mb-2 font-serif">{recipe.title}</h3>

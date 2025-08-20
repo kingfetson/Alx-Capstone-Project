@@ -1,70 +1,52 @@
+import React, { useEffect, useState } from "react"
 import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { RecipeCard } from "@/components/recipe-card"
+import fallbackRecipes from "../data.json"
+import { RecipeCard } from "@/components/recipe-card" // make sure you have this component
 
-const recipes = [
-  {
-    id: 1,
-    title: "Classic Lasagna",
-    rating: 4.7,
-    description: "Layers of pasta, rich meat sauce, and creamy béchamel.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 2,
-    title: "Chicken Tikka Masala",
-    rating: 4.8,
-    description: "Creamy and flavorful Indian curry with tender chicken.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 3,
-    title: "Vegan Buddha Bowl",
-    rating: 4.5,
-    description: "A nutritious and colorful bowl packed with fresh veggies and grains.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 4,
-    title: "Spicy Shrimp Tacos",
-    rating: 4.6,
-    description: "Zesty and spicy shrimp tacos with a fresh slaw.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 5,
-    title: "Beef and Broccoli Stir-fry",
-    rating: 4.8,
-    description: "A quick and easy weeknight meal with tender beef and crisp broccoli.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 6,
-    title: "Mediterranean Quinoa Salad",
-    rating: 4.6,
-    description: "Light and refreshing salad with quinoa, vegetables, and feta.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 7,
-    title: "Classic Margherita Pizza",
-    rating: 4.7,
-    description: "Simple yet delicious pizza with fresh mozzarella, basil, and tomato.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 8,
-    title: "Hearty Beef Stew",
-    rating: 4.8,
-    description: "Slow-cooked beef with root vegetables in a rich, savory broth.",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-]
+const RecipesPage = () => {
+  const [recipes, setRecipes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [query, setQuery] = useState("")
 
-export default function RecipesPage() {
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const res = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=")
+        if (!res.ok) throw new Error("API request failed")
+        const data = await res.json()
+
+        if (data.meals) {
+          const formatted = data.meals.map((meal) => ({
+            id: meal.idMeal,
+            title: meal.strMeal,
+            image: meal.strMealThumb,
+            description: meal.strInstructions.substring(0, 100) + "...",
+            rating: (Math.random() * (5 - 4) + 4).toFixed(1), // fake ratings since API doesn’t provide
+          }))
+          setRecipes(formatted)
+        } else {
+          setRecipes(fallbackRecipes)
+        }
+      } catch (error) {
+        console.error("API fetch failed, using fallback:", error)
+        setRecipes(fallbackRecipes)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRecipes()
+  }, [])
+
+  // Filter recipes by search query
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(query.toLowerCase())
+  )
+
   return (
     <div className="min-h-screen bg-orange-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -73,6 +55,8 @@ export default function RecipesPage() {
           <div className="flex-1 flex gap-2">
             <Input
               placeholder="Search recipes..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               className="flex-1 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
             />
             <Button className="bg-orange-500 hover:bg-orange-600 text-white">
@@ -146,14 +130,20 @@ export default function RecipesPage() {
 
           {/* Recipes Grid */}
           <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {recipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-            </div>
+            {loading ? (
+              <p className="text-center text-gray-500">Loading recipes...</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {filteredRecipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
   )
 }
+
+export default RecipesPage
