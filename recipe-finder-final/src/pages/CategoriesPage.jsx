@@ -1,142 +1,216 @@
-import React from "react";
-import Footer from "../components/Footer";
-
-import { Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { CategoryCard } from "@/components/category-card"
-
-const categories = [
-  {
-    id: 1,
-    name: "Italian",
-    image: "/italian-pasta-fork.png",
-  },
-  {
-    id: 2,
-    name: "Mexican",
-    image: "/placeholder-b0ayo.png",
-  },
-  {
-    id: 3,
-    name: "Asian",
-    image: "/asian-stir-fry-wok.png",
-  },
-  {
-    id: 4,
-    name: "Indian",
-    image: "/indian-curry-clay-pot.png",
-  },
-  {
-    id: 5,
-    name: "Mediterranean",
-    image: "/mediterranean-grilled-fish.png",
-  },
-  {
-    id: 6,
-    name: "Desserts",
-    image: "/colorful-desserts-pastries.png",
-  },
-  {
-    id: 7,
-    name: "Breakfast",
-    image: "/breakfast-pancakes-berries.png",
-  },
-  {
-    id: 8,
-    name: "Soups",
-    image: "/placeholder.svg?height=120&width=120",
-  },
-]
+"use client";
+import React, { useEffect, useState } from "react";
 
 export default function CategoriesPage() {
+  const [recipes, setRecipes] = useState([]);
+  const [selectedCuisines, setSelectedCuisines] = useState([]);
+  const [selectedDiets, setSelectedDiets] = useState([]);
+  const [selectedDifficulty, setSelectedDifficulty] = useState([]);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("alphabetical");
+  const [loading, setLoading] = useState(false);
+
+  const apiKey = import.meta.env.VITE_SPOONACULAR_KEY;
+
+  // Toggle checkbox
+  const toggleFilter = (filter, setFilter, value) => {
+    setFilter((prev) =>
+      prev.includes(value) ? prev.filter((f) => f !== value) : [...prev, value]
+    );
+  };
+
+  // Fetch recipes
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      setLoading(true);
+      try {
+        let results = [];
+
+        // 1. Fetch by Cuisine (TheMealDB)
+        if (selectedCuisines.length > 0) {
+          for (const cuisine of selectedCuisines) {
+            const res = await fetch(
+              `https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`
+            );
+            const data = await res.json();
+            if (data.meals) {
+              results.push(
+                ...data.meals.map((m) => ({
+                  id: m.idMeal,
+                  title: m.strMeal,
+                  image: m.strMealThumb,
+                }))
+              );
+            }
+          }
+        }
+
+        // 2. Fetch by Dietary Preferences & Difficulty (Spoonacular)
+        if (selectedDiets.length > 0 || selectedDifficulty.length > 0) {
+          const dietQuery = selectedDiets.join(","); // e.g. vegetarian,vegan
+          const maxReadyTime =
+            selectedDifficulty.length > 0
+              ? selectedDifficulty[0] // take one difficulty (Easy=30, Medium=60, Hard=120)
+              : "";
+
+          const url = `https://api.spoonacular.com/recipes/complexSearch?diet=${dietQuery}&maxReadyTime=${maxReadyTime}&number=10&apiKey=${apiKey}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          if (data.results) {
+            results.push(
+              ...data.results.map((m) => ({
+                id: m.id,
+                title: m.title,
+                image: m.image,
+              }))
+            );
+          }
+        }
+
+        setRecipes(results);
+      } catch (err) {
+        console.error("Error fetching recipes:", err);
+      }
+      setLoading(false);
+    };
+
+    fetchRecipes();
+  }, [selectedCuisines, selectedDiets, selectedDifficulty]);
+
+  // Apply search + sort
+  const filteredRecipes = recipes
+    .filter((meal) =>
+      meal.title.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sort === "alphabetical") {
+        return a.title.localeCompare(b.title);
+      }
+      return 0;
+    });
+
   return (
-    <div className="min-h-screen bg-orange-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Search and Sort */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <div className="flex-1 flex gap-2">
-            <Input
-              placeholder="Search categories..."
-              className="flex-1 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
-            />
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-              <Search className="h-4 w-4" />
-            </Button>
+    <div className="bg-orange-50 min-h-screen font-sans">
+      <main className="flex px-10 py-6 gap-6">
+        {/* Sidebar */}
+        <aside className="bg-orange-100 rounded-2xl p-6 w-60">
+          {/* Cuisine */}
+          <div className="mb-6">
+            <h2 className="text-orange-600 font-semibold mb-2">Cuisine</h2>
+            <ul className="space-y-2 text-gray-700">
+              {["Italian", "Mexican", "Canadian", "Indian", "French"].map(
+                (item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedCuisines.includes(item)}
+                      onChange={() =>
+                        toggleFilter(selectedCuisines, setSelectedCuisines, item)
+                      }
+                      className="accent-orange-500"
+                    />
+                    <span>{item}</span>
+                  </li>
+                )
+              )}
+            </ul>
           </div>
-          <Select defaultValue="alphabetical">
-            <SelectTrigger className="w-full md:w-48 border-gray-300">
-              <SelectValue placeholder="Sort by: Alphabetical" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="alphabetical">Sort by: Alphabetical</SelectItem>
-              <SelectItem value="popular">Sort by: Popular</SelectItem>
-              <SelectItem value="newest">Sort by: Newest</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Filters */}
-          <aside className="lg:w-64 space-y-6">
-            <div>
-              <h3 className="font-semibold text-orange-500 mb-4 text-lg">Cuisine</h3>
-              <div className="space-y-3">
-                {["Italian", "Mexican", "Asian", "Indian", "Mediterranean"].map((cuisine) => (
-                  <div key={cuisine} className="flex items-center space-x-2">
-                    <Checkbox id={cuisine.toLowerCase()} />
-                    <label htmlFor={cuisine.toLowerCase()} className="text-sm text-gray-600 cursor-pointer">
-                      {cuisine}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Dietary Preferences */}
+          <div className="mb-6">
+            <h2 className="text-orange-600 font-semibold mb-2">
+              Dietary Preferences
+            </h2>
+            <ul className="space-y-2 text-gray-700">
+              {["vegetarian", "vegan", "gluten free"].map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedDiets.includes(item)}
+                    onChange={() =>
+                      toggleFilter(selectedDiets, setSelectedDiets, item)
+                    }
+                    className="accent-orange-500"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div>
-              <h3 className="font-semibold text-orange-500 mb-4 text-lg">Dietary Preferences</h3>
-              <div className="space-y-3">
-                {["Vegetarian", "Vegan", "Gluten-Free", "Dairy-Free"].map((diet) => (
-                  <div key={diet} className="flex items-center space-x-2">
-                    <Checkbox id={diet.toLowerCase().replace("-", "")} />
-                    <label
-                      htmlFor={diet.toLowerCase().replace("-", "")}
-                      className="text-sm text-gray-600 cursor-pointer"
-                    >
-                      {diet}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Difficulty */}
+          <div>
+            <h2 className="text-orange-600 font-semibold mb-2">Difficulty</h2>
+            <ul className="space-y-2 text-gray-700">
+              {[
+                { label: "Easy (≤30 min)", value: 30 },
+                { label: "Medium (≤60 min)", value: 60 },
+                { label: "Hard (≤120 min)", value: 120 },
+              ].map((item) => (
+                <li key={item.value} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedDifficulty.includes(item.value)}
+                    onChange={() =>
+                      toggleFilter(
+                        selectedDifficulty,
+                        setSelectedDifficulty,
+                        item.value
+                      )
+                    }
+                    className="accent-orange-500"
+                  />
+                  <span>{item.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
 
-            <div>
-              <h3 className="font-semibold text-orange-500 mb-4 text-lg">Difficulty</h3>
-              <div className="space-y-3">
-                {["Easy", "Medium", "Hard"].map((difficulty) => (
-                  <div key={difficulty} className="flex items-center space-x-2">
-                    <Checkbox id={difficulty.toLowerCase()} />
-                    <label htmlFor={difficulty.toLowerCase()} className="text-sm text-gray-600 cursor-pointer">
-                      {difficulty}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
+        {/* Main Content */}
+        <section className="flex-1">
+          {/* Search + Sort */}
+          <div className="flex gap-4 mb-6">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search recipes..."
+              className="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            >
+              <option value="alphabetical">Sort by: Alphabetical</option>
+            </select>
+          </div>
 
-          {/* Categories Grid */}
-          <div className="flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categories.map((category) => (
-                <CategoryCard key={category.id} category={category} />
+          {/* Recipes Grid */}
+          {loading ? (
+            <p className="text-gray-600">Loading recipes...</p>
+          ) : filteredRecipes.length > 0 ? (
+            <div className="grid grid-cols-3 gap-6">
+              {filteredRecipes.map((meal) => (
+                <div
+                  key={meal.id}
+                  className="bg-white rounded-xl shadow-sm p-6 flex flex-col items-center justify-center"
+                >
+                  <img
+                    src={meal.image}
+                    alt={meal.title}
+                    className="w-24 h-24 rounded-full object-cover mb-4"
+                  />
+                  <h3 className="font-medium text-gray-800">{meal.title}</h3>
+                </div>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
+          ) : (
+            <p className="text-gray-600">Select filters to view recipes.</p>
+          )}
+        </section>
+      </main>
     </div>
-  )
+  );
 }
