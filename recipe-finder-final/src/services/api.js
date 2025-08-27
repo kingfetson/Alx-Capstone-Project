@@ -1,21 +1,22 @@
-import axios from "axios";
+// Search for meals by name
+export async function fetchRecipes(query) {
+  const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+  const data = await res.json();
+  return data.meals || [];
+}
 
-const BASE_URL = "https://api.edamam.com/search";
-const API_ID = import.meta.env.VITE_APP_ID;
-const APP_KEY = import.meta.env.VITE_APP_KEY;
+// Get multiple random meals
+export async function fetchRandomMeals(count = 6) {
+  const promises = Array.from({ length: count }, () =>
+    fetch("https://www.themealdb.com/api/json/v1/1/random.php").then((res) => res.json())
+  );
+  const results = await Promise.all(promises);
+  return results.map((r) => r.meals[0]);
+}
 
-export const fetchRecipes = async (query) => {
-  try {
-    const response = await axios.get(BASE_URL, {
-      params: {
-        q: query,
-        app_id: API_ID,
-        app_key: APP_KEY,
-      },
-    });
-    return response.data.hits;
-  } catch (error) {
-    console.error("Error fetching recipes:", error);
-    throw error;
-  }
-};
+// ✅ Get categories list
+export async function fetchCategories() {
+  const res = await fetch("https://www.themealdb.com/api/json/v1/1/categories.php");
+  const data = await res.json();
+  return data.categories || [];
+}
