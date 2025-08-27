@@ -5,6 +5,7 @@ import RecipePage from "./pages/RecipePage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AboutPage from "./pages/AboutPage";
 import NotFound from "./pages/NotFound";
+import Footer from "./components/Footer"
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+       {/* Footer stays at bottom */}
+       <Footer />
     </Router>
   );
 }
