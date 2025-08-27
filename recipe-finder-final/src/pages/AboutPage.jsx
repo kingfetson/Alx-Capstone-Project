@@ -24,7 +24,7 @@ export default function AboutPage() {
                   something new to try.
                 </p>
               </div>
-
+<br />
               <div>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4 font-serif">What We Offer</h2>
                 <p>
@@ -33,7 +33,7 @@ export default function AboutPage() {
                   favorite recipes, create meal plans, and share your culinary creations with our growing community.
                 </p>
               </div>
-
+             <br />
               <div>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4 font-serif">Contact Us</h2>
                 <div className="space-y-2">
