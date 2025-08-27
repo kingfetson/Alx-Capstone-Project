@@ -1,28 +1,74 @@
-// src/components/Navbar.jsx
+// src/components/Navigation.jsx
 import React from "react";
-import { Link } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
+import { Link, NavLink } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
-const Navbar = () => {
+const Navigation = () => {
   return (
-    <nav className="flex justify-between items-center px-8 py-4 bg-orange-200 shadow-sm">
-      <Link to="/" className="text-orange-700 font-bold text-xl">
-        RecipeFinder
-      </Link>
-      <ul className="flex gap-6 text-gray-700 font-medium">
-        <li><Link to="/" className="hover:text-orange-600">Home</Link></li>
-        <li><Link to="/recipes" className="hover:text-orange-600">Recipes</Link></li>
-        <li><Link to="/categories" className="hover:text-orange-600">Categories</Link></li>
-        <li><Link to="/about" className="hover:text-orange-600">About Us</Link></li>
-      </ul>
-      <div className="flex gap-4">
-        <button className="text-gray-600 hover:text-orange-600">
-          <FiSearch size={20} />
-        </button>
-        <div className="w-8 h-8 rounded-full bg-gray-300"></div>
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors"
+        >
+          RecipeFinder
+        </Link>
+
+        {/* Navigation Links */}
+        <div className="flex items-center gap-8">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `font-medium ${
+                isActive ? "text-orange-700" : "text-orange-600 hover:text-orange-700"
+              }`
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/recipes"
+            className={({ isActive }) =>
+              `font-medium ${
+                isActive ? "text-orange-700" : "text-orange-600 hover:text-orange-700"
+              }`
+            }
+          >
+            Recipes
+          </NavLink>
+
+          <NavLink
+            to="/categories"
+            className={({ isActive }) =>
+              `font-medium ${
+                isActive ? "text-orange-700" : "text-orange-600 hover:text-orange-700"
+              }`
+            }
+          >
+            Categories
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `font-medium ${
+                isActive ? "text-orange-700" : "text-orange-600 hover:text-orange-700"
+              }`
+            }
+          >
+            About
+          </NavLink>
+
+          {/* Profile Icon */}
+          <button className="text-orange-600 text-3xl hover:text-orange-700 transition-colors">
+            <FaUserCircle />
+          </button>
+        </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default Navigation;
