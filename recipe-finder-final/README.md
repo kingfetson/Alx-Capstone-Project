@@ -1,12 +1,10 @@
+# 🍲 Recipe Finder App
 
-#  Recipe Finder
-
-A simple and interactive **Recipe Finder** web application built with **React.js**.  
-The app allows users to browse, search, and add their own recipes.  
+A simple and interactive **Recipe Finder** web application built with **React.js**, **Vite**, and **Tailwind CSS** that allows users to explore real recipes from [TheMealDB API](https://www.themealdb.com/).  
 
 ---
 
-## Features
+## <img src="https://img.icons8.com/color/48/000000/chef-hat.png" width="25"/> Features 
 - 📖 View a list of available recipes.  
 - 🔍 Search recipes by name.  
 - ➕ Add new recipes with ingredients and instructions.  
@@ -14,13 +12,19 @@ The app allows users to browse, search, and add their own recipes.
 
 ---
 
-## 🛠 Tech Stack
-- **React.js** – Frontend framework  
-- **React Router** – Navigation between pages  
-- **Tailwind CSS** – Styling  
-- **Local JSON / State** – Recipe data management  
+## <img src="https://img.icons8.com/color/48/000000/ingredients.png" width="25"/> Tech Stack  
+- ⚛️ **React.js** – Component-based UI framework.  
+- 🚀 **Vite** – Lightning-fast development environment.  
+- 🎨 **Tailwind CSS** – Utility-first styling.  
+- 🗂 **React Router** – Smooth page navigation.  
+- 🌐 **TheMealDB API** – Real recipe data source.  
 
 ---
+
+## <img src="https://img.icons8.com/color/48/000000/recipe-book.png" width="25"/> How It Works  
+1. 🏠 Landing page displays categories of recipes.  
+2. 🔎 Search bar lets you find meals by name.  
+3. 🍴 Clicking a recipe card redirects you to its **detailed recipe page** on TheMealDB.
 
 ##  Project Structure
 ```
@@ -69,7 +73,7 @@ git clone https://github.com/your-username/recipe-finder.git
 cd recipe-finder
 ````
 
-### 2️ Install dependencies
+## <img src="https://img.icons8.com/color/48/000000/installing-updates.png" width="25"/> Installation & Setup  
 
 
 npm install
