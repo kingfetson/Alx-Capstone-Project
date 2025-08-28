@@ -1,6 +1,7 @@
-# 🍲 Recipe Finder App
+# <img src="https://img.icons8.com/color/48/000000/restaurant.png" width="30"/> Recipe Finder
 
-A simple and interactive **Recipe Finder** web application built with **React.js**, **Vite**, and **Tailwind CSS** that allows users to explore real recipes from [TheMealDB API](https://www.themealdb.com/).  
+
+A simple and interactive **Recipe Finder** web application built with **React.js**, **Vite**, and **Tailwind CSS** that allows users to explore real recipes from [TheMealDB API](https://www.themealdb.com/).[Spoonercular API](https://www.spoonercular.com/)  
 
 ---
 
@@ -21,7 +22,8 @@ A simple and interactive **Recipe Finder** web application built with **React.js
 
 ---
 
-## <img src="https://img.icons8.com/color/48/000000/recipe-book.png" width="25"/> How It Works  
+## <img src="https://img.icons8.com/color/48/000000/installing-updates.png" width="25"/> How It Works
+ 
 1. 🏠 Landing page displays categories of recipes.  
 2. 🔎 Search bar lets you find meals by name.  
 3. 🍴 Clicking a recipe card redirects you to its **detailed recipe page** on TheMealDB.
@@ -113,7 +115,7 @@ App will run at  `http://localhost:3000`
 ## Author
 
 **Festus Kimani**
-📧 Contact: [your-email@example.com](mailto:your-email@example.com)
-🔗 GitHub: [your-username](https://github.com/your-username)
+📧 Contact: [My-Email](mailto:jubileefestus@gmail.com)
+🔗 GitHub: [Owner](https://github.com/kingfetson)
 
 
