@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Bolognese",
+    "description": "Classic Italian pasta with rich meat sauce.",
+    "image": "/fallback1.jpeg"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Curry",
+    "description": "Spicy and flavorful chicken curry with rice.",
+    "image": "/fallback2.jpeg"
+  },
+  {
+    "id": 3,
+    "title": "Vegetable Stir Fry",
+    "description": "Quick and healthy mixed vegetable stir fry.",
+    "image": "/fallback3.jpeg"
+  },
+  {
+    "id": 4,
+    "title": "banana bread",
+    "description": "Easy and moist banana bread.",
+    "image": "/fallback4.jpeg"
+  },
+  {
+    "id": 5,
+    "title": "french toast recipe",
+    "description": "Quick and easy french toast.",
+    "image": "/fallback5.jpeg"
+  },
+  {
+    "id": 6,
+    "title": "Pilau recipe",
+    "description": "Quick and healthy no meat pilau.",
+    "image": "/fallback6.jpeg"
+  },
+  {
+    "id": 7,
+    "title": "Mandazi",
+    "description": "Quick and healthy soft mandazi.",
+    "image": "/fallback7.jpeg"
+  },
+  {
+    "id": 8,
+    "title": "vegetable lasagna",
+    "description": "Quick and healthy homemade vegetable lasagna.",
+    "image": "/fallback8.jpeg"
+  },
+  {
+    "id": 9,
+    "title": "cookies",
+    "description": "Quick and healthy fresh homemade cookies.",
+    "image": "/fallback9.jpeg"
+  },
+  {
+    "id": 10,
+    "title": "layered chapati",
+    "description": "Quick and soft layered chapati.",
+    "image": "/fallback10.jpeg"
+  },
+  {
+    "id": 11,
+    "title": "vanilla sponge cake",
+    "description": "Quick and healthy homemade vanilla sponge cake.",
+    "image": "/fallback11.jpeg"
+  },
+    {
+    "id": 12,
+    "title": "chicken stew",
+    "description": "Quick and healthy homemade chicken stew.",
+    "image": "/fallback12.jpeg"
+  }
+]

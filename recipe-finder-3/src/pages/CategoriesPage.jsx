@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 export default function CategoriesPage() {
   const [recipes, setRecipes] = useState([]);
   const [selectedCuisines, setSelectedCuisines] = useState([]);
@@ -79,9 +78,7 @@ export default function CategoriesPage() {
 
   // Apply search + sort
   const filteredRecipes = recipes
-    .filter((meal) =>
-      meal.title.toLowerCase().includes(search.toLowerCase())
-    )
+    .filter((meal) => meal.title.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
       if (sort === "alphabetical") {
         return a.title.localeCompare(b.title);
@@ -93,7 +90,7 @@ export default function CategoriesPage() {
     <div className="bg-orange-50 min-h-screen font-sans">
       <main className="flex px-10 py-6 gap-6">
         {/* Sidebar */}
-        <aside className="bg-orange-100 rounded-1xl p-6 w-60">
+        <aside className="bg-orange-200 rounded-2xl p-6 w-60">
           {/* Cuisine */}
           <div className="mb-6">
             <h2 className="text-orange-600 font-semibold mb-2">Cuisine</h2>
@@ -105,7 +102,11 @@ export default function CategoriesPage() {
                       type="checkbox"
                       checked={selectedCuisines.includes(item)}
                       onChange={() =>
-                        toggleFilter(selectedCuisines, setSelectedCuisines, item)
+                        toggleFilter(
+                          selectedCuisines,
+                          setSelectedCuisines,
+                          item
+                        )
                       }
                       className="accent-orange-500"
                     />
@@ -195,14 +196,14 @@ export default function CategoriesPage() {
               {filteredRecipes.map((meal) => (
                 <div
                   key={meal.id}
-                  className="bg-black rounded-x2 shadow-sm p-6 flex flex-col items-center justify-center"
+                  className="bg-black rounded-xl shadow-sm p-6 flex flex-col items-center justify-center"
                 >
                   <img
                     src={meal.image}
                     alt={meal.title}
                     className="w-34 h-34 rounded-full object-cover mb-4"
                   />
-                  <h3 className="font-medium text-gray-100 ">{meal.title}</h3>
+                  <h3 className="font-medium text-gray-200">{meal.title}</h3>
                 </div>
               ))}
             </div>

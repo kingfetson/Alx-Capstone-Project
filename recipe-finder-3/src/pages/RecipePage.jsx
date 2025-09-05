@@ -64,7 +64,7 @@ export default function RecipesPage() {
   return (
     <div className="bg-orange-50 min-h-screen font-sans flex">
       {/* Sidebar */}
-      <aside className="w-44 bg-orange-200 p-9">
+      <aside className="w-64 bg-orange-200 p-6">
         <h2 className="font-bold text-lg mb-4">Cuisine</h2>
         <ul className="space-y-2 text-gray-700">
           {["Italian", "Mexican", "Asian", "Indian", "Mediterranean"].map(
@@ -101,15 +101,15 @@ export default function RecipesPage() {
       </aside>
 
       {/* Main Recipes Grid */}
-      <main className="flex-1 bg-black p-6">
+      <main className="flex-1 p-6 bg-black">
         {loading ? (
           <p className="text-center text-gray-600">Loading recipes...</p>
         ) : filteredRecipes.length > 0 ? (
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
             {filteredRecipes.map((recipe) => (
               <div
                 key={recipe.idMeal}
-                className="bg-orange-60 rounded-sm shadow-md overflow-hidden hover:shadow-lg transition"
+                className="bg-orange rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
               >
                 <img
                   src={recipe.strMealThumb}
@@ -117,17 +117,17 @@ export default function RecipesPage() {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-1">
-                  <h3 className="font-semibold text-gray-800 text-lg mb-2">
+                  <h3 className="font-semibold text-gray-200 text-lg mb-2">
                     {recipe.strMeal}
                   </h3>
-                  <div className="flex items-left text-white-500 text-sm mb-1">
+                  <div className="flex items-left text-orange-500 text-sm mb-1">
                     <Star size={14} className="fill-orange-500" />
                     <span className="ml-1">4.5</span>
-                    <span className="ml-3 text-xs text-gray-500">
+                    <span className="ml-3 text-xs text-gray-600">
                       {recipe.difficulty}
                     </span>
                   </div>
-                  <p className="text-gray-500 text-sm line-clamp-3">
+                  <p className="text-gray-200 text-sm line-clamp-3">
                     {recipe.strInstructions?.slice(0, 50)}...
                   </p>
                 </div>

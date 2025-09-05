@@ -1,16 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card";
-
+import React from "react";
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-orange-50 py-12">
+    <div className="min-h-screen bg-orange-100 py-12">
       <div className="max-w-4xl mx-auto px-4">
-        <Card className="bg-orange-200 border-gray-200 shadow-sm">
+        <Card className="bg-orange-300 border-gray-600 shadow-lg p-19">
           <CardContent className="p-12">
             <h1 className="text-4xl font-bold text-center text-gray-800 mb-12 font-serif">
               About RecipeFinder
             </h1>
 
-            <div className="space-y-8 text-gray-700  leading-relaxed">
+            <div className="space-y-8 text-gray-700 leading-relaxed">
               <p className="text-lg">
                 Welcome to RecipeFinder, your ultimate destination for
                 discovering and exploring delicious recipes from around the

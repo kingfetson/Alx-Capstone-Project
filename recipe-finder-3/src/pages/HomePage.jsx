@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search } from "lucide-react";
 import { fetchRecipes, fetchRandomRecipes } from "../services/api"; // make sure these exist
+import React from "react";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -40,7 +41,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-orange-200">
+    <div className="min-h-screen bg-orange-200 p-9">
       {/* Hero Section */}
       <section className="px-6 py-16">
         <div className="max-w-4xl mx-auto text-center">
@@ -99,15 +100,15 @@ export default function HomePage() {
                   key={meal.idMeal}
                   className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
                 >
-                  <div className="w-80 h-68 bg-gray-200">
+                  <div className="w-80 h-68 bg-gray-100">
                     <img
                       src={meal.strMealThumb}
                       alt={meal.strMeal}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <CardContent className="p-9">
-                    <h3 className="text-xl font-semibold text-gray-100 mb-2 line-clamp-1">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-2 line-clamp-1">
                       {meal.strMeal}
                     </h3>
                     <p className="text-gray-300 text-sm mb-3">
